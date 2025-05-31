@@ -1,20 +1,120 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header>
+  <ion-toolbar class="futuristic-toolbar">
+    <ion-title class="futuristic-title">NEXUS UPLOAD</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="neon-button">
+        <ion-icon slot="icon-only" name="cloud-upload-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="futuristic-content">
+  <div class="container">
+    <!-- Efecto de partículas flotantes -->
+    <div class="particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+    
+    <!-- Tarjeta principal -->
+    <ion-card class="futuristic-card">
+      <div class="card-glow"></div>
+      <ion-card-header>
+        <ion-card-title class="futuristic-card-title">SUBIENDO AL NEXO</ion-card-title>
+        <ion-card-subtitle class="futuristic-card-subtitle">Conecta tus archivos a la nube del futuro</ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <!-- Área de arrastrar y soltar -->
+        <div class="futuristic-drop-zone" 
+             #dropZone
+             [class.active]="isDragOver"
+             (dragover)="onDragOver($event)" 
+             (dragleave)="onDragLeave($event)" 
+             (drop)="onDrop($event)">
+          <div class="drop-content">
+            <div class="holographic-icon">
+              <ion-icon name="cloud-upload-outline"></ion-icon>
+            </div>
+            <p>Arrastra tus archivos a la zona</p>
+            <p class="small-text">o</p>
+            <ion-button class="futuristic-button" fill="outline" (click)="fileInput.click()">
+              <ion-icon slot="start" name="folder-open-outline"></ion-icon>
+              Seleccionar archivo
+            </ion-button>
+          </div>
+          <input #fileInput type="file" hidden (change)="onFileChange($event)" accept="image/*, .pdf">
+        </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+        <!-- Detalles del archivo seleccionado -->
+        <div *ngIf="selectedFile" class="futuristic-file-details">
+          <ion-item lines="none" class="futuristic-item">
+            <div class="file-icon-container">
+              <ion-icon [name]="getFileIcon()"></ion-icon>
+            </div>
+            <ion-label class="futuristic-label">
+              <h3>{{ selectedFile.name }}</h3>
+              <p>{{ selectedFile.size | fileSize }} · {{ selectedFile.type }}</p>
+            </ion-label>
+            <ion-button slot="end" fill="clear" class="neon-button" (click)="clearFile()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </div>
+
+        <!-- Barra de progreso futurista -->
+        <div *ngIf="isUploading" class="futuristic-progress-container">
+          <div class="progress-glow"></div>
+          <ion-progress-bar class="futuristic-progress" [value]="uploadProgress / 100"></ion-progress-bar>
+          <div class="progress-info">
+            <span>TRANSMITIENDO...</span>
+            <span>{{ uploadProgress }}%</span>
+          </div>
+        </div>
+
+        <!-- Botón de subida futurista -->
+        <ion-button 
+          class="futuristic-upload-button"
+          expand="block" 
+          (click)="upload()"
+          [disabled]="!selectedFile || isUploading">
+          <ion-icon slot="start" name="cloud-upload-outline"></ion-icon>
+          {{ isUploading ? 'CONECTANDO...' : 'INICIAR TRANSMISIÓN' }}
+        </ion-button>
+
+        <!-- Mensajes de estado -->
+        <div *ngIf="uploadStatus" class="futuristic-status-message" [class.success]="uploadSuccess" [class.error]="!uploadSuccess">
+          <div class="status-icon">
+            <ion-icon [name]="uploadSuccess ? 'checkmark-circle' : 'alert-circle'"></ion-icon>
+          </div>
+          {{ uploadStatus }}
+        </div>
+
+        <!-- Vista previa / enlace -->
+        <div *ngIf="fileUrl" class="futuristic-preview-container">
+          <h3>ARCHIVO EN EL NEXO:</h3>
+          <div class="preview-content">
+            <div *ngIf="isImageFile()" class="futuristic-image-preview">
+              <img [src]="fileUrl" alt="Vista previa">
+              <a [href]="fileUrl" target="_blank" class="futuristic-download-link">
+                <ion-icon name="download-outline"></ion-icon> DESCARGAR
+              </a>
+            </div>
+            <div *ngIf="isPDFFile()" class="futuristic-pdf-preview">
+              <div class="holographic-pdf">
+                <ion-icon name="document-outline"></ion-icon>
+              </div>
+              <a [href]="fileUrl" target="_blank" class="futuristic-download-link">
+                <ion-icon name="download-outline"></ion-icon> DESCARGAR DOCUMENTO
+              </a>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>
