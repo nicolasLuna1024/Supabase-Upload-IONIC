@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  supabaseUrl: "",
-  supabaseKey:  ""
+  supabaseUrl: "https://urhzsodsjwsgszhokgah.supabase.co",
+  supabaseKey:  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVyaHpzb2RzandzZ3N6aG9rZ2FoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg1NDU1MTMsImV4cCI6MjA2NDEyMTUxM30.ym2Tgv4DW8qPN_fTdIaYgggJJ3gX5GGgRNxxd6RGlG4"
 };
 
 /*
