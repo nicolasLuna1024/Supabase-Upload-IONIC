@@ -1,4 +1,4 @@
-# Supabase-Upload-IONIC
+# Supabase storage - Nicolás Luna & Angel Maldonado
 
 Este proyecto es una aplicación móvil desarrollada con **Ionic** y **Angular**, que permite subir archivos a una base de datos de Supabase.
 
@@ -62,3 +62,7 @@ El desarrollador debe crear un bucket en el Storage de Supabase llamado "archivo
 **4. Revisión en Supabase**
 
 ![_](./src/assets/4%20supabase%20confirmacion.png)
+
+**5. Más archivos subidos al storage**
+
+![_](./src/assets/supabase%20archivos.png)
